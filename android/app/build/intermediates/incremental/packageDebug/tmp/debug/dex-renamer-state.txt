@@ -1,4 +1,4 @@
-#Tue Jan 07 15:55:39 BRT 2020
+#Tue Jan 07 16:21:20 BRT 2020
 base.0=/home/ilegra0402/GIT/lottie-react-native-app/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

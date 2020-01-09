@@ -1,75 +1,77 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  Text,
+  Animated,
   StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  Easing,
+  Text,
+  SafeAreaView,
+  TouchableOpacity
+} from "react-native";
+import LottieView from "lottie-react-native";
+import loading from "./android/app/src/svg/196-material-wave-loading.json";
+import joia from "./android/app/src/svg/thumb-up.json";
 
 const App: () => React$Node = () => {
+  const [progress] = useState(new Animated.Value(0));
+
+  const handleAnime = () => {
+    Animated.timing(progress, {
+      toValue: 1,
+      duration: 700,
+      easing: Easing.linear,
+      dalay: 0
+    }).start();
+
+    setTimeout(() => {
+      Animated.timing(progress, {
+        toValue: 0,
+        duration: 0,
+        easing: Easing.bounce,
+        dalay: 1
+      }).start();
+    }, 1000);
+  };
+
   return (
-    <>
+    <SafeAreaView>
       <StatusBar barStyle="dark-content" />
-        <Text>Hello</Text>
-    </>
+      <View style={styles.container}>
+        {/* <Text>Hello</Text> */}
+        
+          <LottieView style={{margin: 20}} progress={progress} source={loading} />
+        
+        <View>
+          <TouchableOpacity onPress={() => handleAnime()}>
+            <View
+              style={{
+                backgroundColor: "grey",
+                margin: 10,
+                width: 60,
+                height: 60,
+                borderRadius: 10
+              }}
+            >
+              <LottieView progress={progress} source={joia} />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: "red"
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: "white",
+    height: 400,
+    width: 300
+  }
 });
 
 export default App;

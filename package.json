@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "create-app": "react-native run-android --variant=release",
+    "build": "cd android && ./gradlew assembleRelease",
+    "install:android": "adb install -r android/app/build/outputs/apk/release/app-release.apk",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "lottie-react-native": "^3.3.2",
     "react": "16.9.0",
     "react-native": "0.61.5"
   },
