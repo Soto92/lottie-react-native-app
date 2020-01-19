@@ -6,34 +6,26 @@ import {
   StatusBar,
   Easing,
   SafeAreaView,
-  TouchableOpacity,
   ScrollView
 } from "react-native";
+import Slider from "@react-native-community/slider";
 import LottieView from "lottie-react-native";
 import loading from "./android/app/src/svg/196-material-wave-loading.json";
-import joia from "./android/app/src/svg/thumb-up.json";
+import Smile from "./android/app/src/svg/859-smiley-watch.json";
 import circle from "./android/app/src/svg/222-trail-loading.json";
 import wind from "./android/app/src/svg/14327-wind-gust.json";
 
 const App: () => React$Node = () => {
-  const [progress] = useState(new Animated.Value(0));
+  const [progress] = useState(new Animated.Value(1));
 
-  const handleAnime = () => {
+  const handleAnime = value => {
+    const formatValue = value.toFixed(1);
     Animated.timing(progress, {
-      toValue: 1,
-      duration: 700,
+      toValue: 1 - formatValue,
+      duration: 50,
       easing: Easing.linear,
       dalay: 0
     }).start();
-
-    setTimeout(() => {
-      Animated.timing(progress, {
-        toValue: 0,
-        duration: 0,
-        easing: Easing.bounce,
-        dalay: 1
-      }).start();
-    }, 1000);
   };
 
   return (
@@ -68,22 +60,22 @@ const App: () => React$Node = () => {
           <LottieView
             style={{ margin: 20 }}
             progress={progress}
-            source={loading}
+            source={Smile}
           />
           <View>
-            <TouchableOpacity onPress={() => handleAnime()}>
-              <View
-                style={{
-                  backgroundColor: "grey",
-                  margin: 10,
-                  width: 60,
-                  height: 60,
-                  borderRadius: 10
-                }}
-              >
-                <LottieView progress={progress} source={joia} />
-              </View>
-            </TouchableOpacity>
+            <Slider
+              style={{
+                width: 300,
+                height: 40,
+                backgroundColor: "#c4c2c2",
+                marginTop: 10
+              }}
+              minimumValue={0}
+              maximumValue={1}
+              onValueChange={value => handleAnime(value)}
+              minimumTrackTintColor="#FFFFFF"
+              maximumTrackTintColor="#000000"
+            />
           </View>
         </View>
       </ScrollView>
